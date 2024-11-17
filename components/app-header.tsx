@@ -1,3 +1,5 @@
+"use client"
+
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -6,34 +8,53 @@ import {
   BreadcrumbPage,
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb"
-import { Separator } from "@/components/ui/separator"
+import { Button } from "@/components/ui/button"
 import { SidebarTrigger } from "@/components/ui/sidebar"
 import { DatePickerWithRange } from "@/components/ui/DateRangePicker"
 import { ThemeToggle } from "@/components/theme-toggle"
+import { Bell, Settings } from "lucide-react"
+import { useNavigation } from "@/contexts/navigation-context"
+import { useEffect, useState } from "react"
 
 export function AppHeader() {
+  const navigation = useNavigation()
+  const [mounted, setMounted] = useState(false)
+
+  useEffect(() => {
+    setMounted(true)
+  }, [])
+
   return (
-    <header className="flex h-16 shrink-0 items-center justify-between transition-[width,height] ease-linear group-has-[[data-collapsible=icon]]/sidebar-wrapper:h-12">
-      <div className="flex items-center gap-2 px-4">
-        <SidebarTrigger className="-ml-1" />
-        <Separator orientation="vertical" className="mr-2 h-4" />
+    <header className="flex h-16 shrink-0 items-center justify-between px-4 border-b">
+      <div className="flex items-center gap-4">
+        <SidebarTrigger />
         <Breadcrumb>
           <BreadcrumbList>
-            <BreadcrumbItem className="hidden md:block">
-              <BreadcrumbLink href="#">
-                Building Your Application
-              </BreadcrumbLink>
-            </BreadcrumbItem>
-            <BreadcrumbSeparator className="hidden md:block" />
-            <BreadcrumbItem>
-              <BreadcrumbPage>Data Fetching</BreadcrumbPage>
-            </BreadcrumbItem>
+            {mounted && navigation.currentSection && navigation.currentSubSection && (
+              <>
+                <BreadcrumbItem className="hidden md:block">
+                  <BreadcrumbLink href="#">{navigation.currentSection}</BreadcrumbLink>
+                </BreadcrumbItem>
+                <BreadcrumbSeparator className="hidden md:block" />
+                <BreadcrumbItem>
+                  <BreadcrumbPage>{navigation.currentSubSection}</BreadcrumbPage>
+                </BreadcrumbItem>
+              </>
+            )}
           </BreadcrumbList>
         </Breadcrumb>
       </div>
-      <div className="px-4 flex items-center gap-2">
+      <div className="flex items-center gap-4">
         <DatePickerWithRange />
-        <ThemeToggle />
+        <div className="flex items-center gap-2 border-l pl-4">
+          <Button variant="ghost" size="icon">
+            <Bell className="h-5 w-5" />
+          </Button>
+          <Button variant="ghost" size="icon">
+            <Settings className="h-5 w-5" />
+          </Button>
+          <ThemeToggle />
+        </div>
       </div>
     </header>
   )

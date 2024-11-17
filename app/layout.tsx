@@ -6,6 +6,7 @@ import { ThemeProvider } from "@/components/theme-provider"
 import { AppSidebar } from "@/components/app-sidebar"
 import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar"
 import { AppHeader } from "@/components/app-header"
+import { NavigationProvider } from "@/contexts/navigation-context"
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -25,21 +26,23 @@ export const metadata: Metadata = {
 
 export default function RootLayout({
   children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+}: {
+  children: React.ReactNode
+}) {
   return (
     <html lang="en" suppressHydrationWarning>
       <body className={`${geistSans.variable} ${geistMono.variable}`}>
         <ThemeProvider>
           <SidebarProvider>
-            <AppSidebar />
-            <SidebarInset>
-              <AppHeader />
-              <div className="p-4">
-                {children}
-              </div>
-            </SidebarInset>
+            <NavigationProvider>
+              <AppSidebar />
+              <SidebarInset>
+                <AppHeader />
+                <div className="p-4">
+                  {children}
+                </div>
+              </SidebarInset>
+            </NavigationProvider>
           </SidebarProvider>
         </ThemeProvider>
       </body>
