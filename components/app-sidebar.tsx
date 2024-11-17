@@ -83,39 +83,39 @@ const data = {
         },
         {
           title: "Chiffre d'Affaires",
-          url: "#",
+          url: "/vue-ensemble/chiffre-affaires",
         },
         {
           title: "ROAS",
-          url: "#",
+          url: "/vue-ensemble/roas",
         },
         {
-          title: "CPA",
-          url: "#",
+          title: "Coût d'acquisition",
+          url: "/vue-ensemble/cout-acquisition",
         },
         {
           title: "Taux de Conversion",
-          url: "#",
+          url: "/vue-ensemble/taux-conversion",
         },
         {
           title: "Appareils",
-          url: "#",
+          url: "/vue-ensemble/appareils",
         },
         {
           title: "Mots-Clés",
-          url: "#",
+          url: "/vue-ensemble/mots-cles",
         },
         {
           title: "Catégories de Produit",
-          url: "#",
+          url: "/vue-ensemble/categorie-produit",
         },
         {
           title: "Clients",
-          url: "#",
+          url: "/vue-ensemble/clients",
         },
         {
           title: "Performance Max",
-          url: "#",
+          url: "/vue-ensemble/performance-max",
         },
       ],
     },
