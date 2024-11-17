@@ -22,6 +22,22 @@ import {
   SidebarMenuSubItem,
 } from "@/components/ui/sidebar"
 
+// Liste des routes disponibles (basée sur les pages existantes)
+const AVAILABLE_ROUTES = [
+  "/vue-ensemble/clients",
+  "/vue-ensemble/cout-acquisition",
+  "/vue-ensemble/mots-cles",
+  "/vue-ensemble/chiffre-affaires",
+  "/vue-ensemble/conversions",
+  "/vue-ensemble/categorie-produit",
+  "/vue-ensemble/appareils",
+  "/vue-ensemble/taux-conversion",
+  "/vue-ensemble/chiffres-cles",
+  "/vue-ensemble/roas",
+  "/vue-ensemble/performance-max",
+  "/vue-ensemble/depenses",
+]
+
 export function NavMain({
   items,
 }: {
@@ -45,16 +61,24 @@ export function NavMain({
     return pathname === url || pathname.startsWith(url + "/")
   }
 
+  const isRouteAvailable = (url: string) => {
+    return AVAILABLE_ROUTES.includes(url)
+  }
+
   const handleMainMenuClick = (item: typeof items[0]) => {
     if (item.items && item.items.length > 0) {
       const firstSubItem = item.items[0]
       router.push(firstSubItem.url)
-      navigation.updateNavigation(firstSubItem.url, item.title, firstSubItem.title)
+      if (isRouteAvailable(firstSubItem.url)) {
+        navigation.updateNavigation(firstSubItem.url, item.title, firstSubItem.title)
+      }
     }
   }
 
   const handleSubMenuClick = (mainItem: typeof items[0], subItem: typeof items[0]['items'][0]) => {
-    navigation.updateNavigation(subItem.url, mainItem.title, subItem.title)
+    if (isRouteAvailable(subItem.url)) {
+      navigation.updateNavigation(subItem.url, mainItem.title, subItem.title)
+    }
   }
 
   // Set initial navigation state on page load
@@ -65,12 +89,13 @@ export function NavMain({
         const currentSubItem = currentMainItem.items?.find(subItem => 
           pathname === subItem.url || pathname.startsWith(subItem.url + "/")
         )
-        if (currentSubItem) {
+        if (currentSubItem && isRouteAvailable(currentSubItem.url)) {
           navigation.updateNavigation(currentSubItem.url, currentMainItem.title, currentSubItem.title)
         } else if (currentMainItem.items?.[0]) {
-          // If no sub-item matches, select the first sub-item
           const firstSubItem = currentMainItem.items[0]
-          navigation.updateNavigation(firstSubItem.url, currentMainItem.title, firstSubItem.title)
+          if (isRouteAvailable(firstSubItem.url)) {
+            navigation.updateNavigation(firstSubItem.url, currentMainItem.title, firstSubItem.title)
+          }
         }
       }
       initializedRef.current = true
