@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
 
-import { ThemeProvider, ThemeToggle } from "@/components/theme-provider"
+import { ThemeProvider } from "@/components/theme-provider"
 import { AppSidebar } from "@/components/app-sidebar"
 import {
   Breadcrumb,
@@ -18,6 +18,13 @@ import {
   SidebarProvider,
   SidebarTrigger,
 } from "@/components/ui/sidebar"
+
+import dynamic from 'next/dynamic'
+import { DatePickerWithRange } from "@/components/ui/DateRangePicker"
+const ThemeToggle = dynamic(
+  () => import('@/components/theme-provider').then((mod) => mod.ThemeToggle),
+  { ssr: false }
+)
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -65,7 +72,8 @@ export default function RootLayout({
                     </BreadcrumbList>
                   </Breadcrumb>
                 </div>
-                <div className="px-4">
+                <div className="px-4 flex items-center gap-2">
+                  <DatePickerWithRange />
                   <ThemeToggle />
                 </div>
               </header>
