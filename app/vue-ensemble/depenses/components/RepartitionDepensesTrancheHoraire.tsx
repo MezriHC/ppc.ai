@@ -33,16 +33,25 @@ const chartConfig = {
   }
 } satisfies ChartConfig
 
-export function DepensesParHeure() {
+export function RepartitionDepensesTrancheHoraire() {
   return (
     <Card>
       <CardHeader>
-        <CardTitle>Dépenses par heure</CardTitle>
+        <CardTitle>Dépenses par tranche horaire</CardTitle>
         <CardDescription>Répartition des dépenses sur 24h</CardDescription>
       </CardHeader>
       <CardContent>
         <ChartContainer config={chartConfig}>
-          <BarChart accessibilityLayer data={chartData}>
+          <BarChart 
+            accessibilityLayer 
+            data={chartData}
+            margin={{
+              left: 0,
+              right: 12,
+              top: 12,
+              bottom: 12
+            }}
+          >
             <CartesianGrid vertical={false} />
             <XAxis
               dataKey="heure"

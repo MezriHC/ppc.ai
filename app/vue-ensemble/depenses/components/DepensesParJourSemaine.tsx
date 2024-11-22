@@ -44,13 +44,23 @@ export function DepensesParJourSemaine() {
       </CardHeader>
       <CardContent>
         <ChartContainer config={chartConfig}>
-          <BarChart accessibilityLayer data={chartData}>
+          <BarChart 
+            accessibilityLayer 
+            data={chartData}
+            margin={{
+              left: 0,
+              right: 12,
+              top: 12,
+              bottom: 12
+            }}
+          >
             <CartesianGrid vertical={false} />
             <XAxis
               dataKey="jour"
               tickLine={false}
               tickMargin={10}
               axisLine={false}
+              interval={0}
             />
             <YAxis
               tickLine={false}
@@ -64,7 +74,7 @@ export function DepensesParJourSemaine() {
             />
             <Bar
               dataKey="depenses"
-              fill="var(--color-depenses)"
+              fill="hsl(var(--primary))"
               strokeWidth={2}
               radius={8}
               activeBar={({ ...props }) => {
@@ -72,7 +82,7 @@ export function DepensesParJourSemaine() {
                   <Rectangle
                     {...props}
                     fillOpacity={0.8}
-                    stroke="var(--color-depenses)"
+                    stroke="hsl(var(--primary))"
                     strokeDasharray={4}
                     strokeDashoffset={4}
                   />

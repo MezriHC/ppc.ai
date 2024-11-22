@@ -19,13 +19,13 @@ import {
 } from "@/components/ui/chart"
 
 const chartData = [
-  { day: "1", depenses: 12500 },
-  { day: "5", depenses: 28750 },
-  { day: "10", depenses: 15200 },
-  { day: "15", depenses: 42300 },
-  { day: "20", depenses: 31450 },
-  { day: "25", depenses: 22800 },
-  { day: "30", depenses: 54321 },
+  { day: "1 avr.", depenses: 12500 },
+  { day: "5 avr.", depenses: 28750 },
+  { day: "10 avr.", depenses: 15200 },
+  { day: "15 avr.", depenses: 42300 },
+  { day: "20 avr.", depenses: 31450 },
+  { day: "25 avr.", depenses: 22800 },
+  { day: "30 avr.", depenses: 54321 },
 ]
 
 const chartConfig = {
@@ -50,8 +50,10 @@ export function EvolutionDepenses() {
             accessibilityLayer
             data={chartData}
             margin={{
-              left: 12,
+              left: 0,
               right: 12,
+              top: 24,
+              bottom: 36
             }}
           >
             <CartesianGrid vertical={false} />
@@ -67,7 +69,31 @@ export function EvolutionDepenses() {
               tickMargin={8}
               tickFormatter={(value) => `${value.toLocaleString()}€`}
             />
-            <ChartTooltip cursor={false} content={<ChartTooltipContent />} />
+            <ChartTooltip 
+              cursor={false} 
+              content={
+                <ChartTooltipContent 
+                  formatter={(value) => (
+                    <>
+                      <div
+                        className="h-2.5 w-2.5 shrink-0 rounded-[2px] bg-[--color-bg]"
+                        style={
+                          {
+                            "--color-bg": `var(--color-depenses)`,
+                          } as React.CSSProperties
+                        }
+                      />
+                      {chartConfig.depenses.label}
+                      <div className="ml-auto flex items-baseline gap-0.5 font-mono font-medium tabular-nums text-foreground min-w-[80px] justify-end">
+                        {value.toLocaleString()}
+                        <span className="font-normal text-muted-foreground">€</span>
+                      </div>
+                    </>
+                  )}
+                  labelFormatter={() => ""}
+                />
+              } 
+            />
             <defs>
               <linearGradient id="fillDepenses" x1="0" y1="0" x2="0" y2="1">
                 <stop
